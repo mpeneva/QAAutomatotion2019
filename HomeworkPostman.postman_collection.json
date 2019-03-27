@@ -1,0 +1,640 @@
+{
+	"info": {
+		"_postman_id": "e5171f8c-99a5-4a24-bf33-18cc0519c56e",
+		"name": "HomeworkPostman",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Households",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a74f09ec-9145-4443-a933-79f106c136bd",
+						"exec": [
+							"pm.globals.set(\"householdId\", pm.response.json().id);",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Check Household name\", function () {",
+							"    var hhName = pm.response.json().name;",
+							"    pm.expect(hhName).to.eql(\"Varna\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"password": "admin",
+						"username": "admin"
+					}
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "G-Token",
+						"type": "text",
+						"value": "ROM831ESV"
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Varna\"\n}\n     \n"
+				},
+				"url": "{{host}}/households"
+			},
+			"response": []
+		},
+		{
+			"name": "Create User1",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d4554e6e-b576-446f-83ab-4be567697d10",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "3abd5b4d-95bf-4795-84fe-6882ee2efb82",
+						"exec": [
+							"pm.globals.set(\"user1HouseholdId\", pm.response.json().householdId);",
+							"pm.globals.set(\"user1WishlistId\", pm.response.json().wishlistId);",
+							"",
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200,201,202]);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"firstName\");",
+							"});",
+							"",
+							"pm.test(\"Check User FirstName\", function () {",
+							"    var firstName = pm.response.json().firstName;",
+							"    pm.expect(firstName).to.eql(\"User1\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "G-Token",
+						"type": "text",
+						"value": "ROM831ESV"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"firstName\": \"User1\",\n\t\"lastName\": \"User1\",\n\t\"email\": \"user1@gmail.com\",\n\t\"householdId\": {{householdId}}\n}"
+				},
+				"url": "{{host}}/users"
+			},
+			"response": []
+		},
+		{
+			"name": "Create User2",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d4554e6e-b576-446f-83ab-4be567697d10",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "3abd5b4d-95bf-4795-84fe-6882ee2efb82",
+						"exec": [
+							"pm.globals.set(\"user2HouseholdId\", pm.response.json().householdId);",
+							"pm.globals.set(\"user2WishlistId\", pm.response.json().wishlistId);",
+							"",
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200,201,202]);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"firstName\");",
+							"});",
+							"",
+							"pm.test(\"Check User FirstName\", function () {",
+							"    var firstName = pm.response.json().firstName;",
+							"    pm.expect(firstName).to.eql(\"User2\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "G-Token",
+						"type": "text",
+						"value": "ROM831ESV"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"firstName\": \"User2\",\n\t\"lastName\": \"User2\",\n\t\"email\": \"user2@gmail.com\",\n\t\"householdId\": {{householdId}}\n}"
+				},
+				"url": "{{host}}/users"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Book1 for User1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "74d5a845-6d9a-4e9f-9153-755616b08da1",
+						"exec": [
+							"pm.globals.set(\"user1Book1Id\", pm.response.json().id);",
+							"pm.globals.set(\"user1Book1Title\", pm.response.json().title);",
+							"",
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200,201,202]);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"title\");",
+							"});",
+							"",
+							"pm.test(\"Check User FirstName\", function () {",
+							"    var firstName = pm.response.json().title;",
+							"    pm.expect(firstName).to.eql(\"Book1User1\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "G-Token",
+						"type": "text",
+						"value": "ROM831ESV"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"Book1User1\",\n\t\"author\": \"Book1User1\",\n\t\"isbn\": \"1593281058810\"\n}"
+				},
+				"url": "{{host}}/books"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Book2 for User1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "74d5a845-6d9a-4e9f-9153-755616b08da1",
+						"exec": [
+							"pm.globals.set(\"user1Book2Id\", pm.response.json().id);",
+							"pm.globals.set(\"user1Book2Title\", pm.response.json().title);",
+							"",
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200,201,202]);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"title\");",
+							"});",
+							"",
+							"pm.test(\"Check User FirstName\", function () {",
+							"    var firstName = pm.response.json().title;",
+							"    pm.expect(firstName).to.eql(\"Book2User1\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "G-Token",
+						"type": "text",
+						"value": "ROM831ESV"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"Book2User1\",\n\t\"author\": \"Book2User1\",\n\t\"isbn\": \"1593281058810\"\n}"
+				},
+				"url": "{{host}}/books"
+			},
+			"response": []
+		},
+		{
+			"name": "Link Book1 to User1",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "G-Token",
+						"value": "ROM831ESV",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{host}}/wishlists/{{user1HouseholdId}}/books/{{user1Book1Id}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Link Book2 to User1",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "G-Token",
+						"type": "text",
+						"value": "ROM831ESV"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{host}}/wishlists/{{user1HouseholdId}}/books/{{user1Book2Id}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Get User1 WishlistBooks",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "G-Token",
+						"type": "text",
+						"value": "ROM831ESV"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{host}}/wishlists/{{user1WishlistId}}/books/"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Book1 for User2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "74d5a845-6d9a-4e9f-9153-755616b08da1",
+						"exec": [
+							"pm.globals.set(\"user2Book1Id\", pm.response.json().id);",
+							"pm.globals.set(\"user2Book1Title\", pm.response.json().title);",
+							"",
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200,201,202]);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"title\");",
+							"});",
+							"",
+							"pm.test(\"Check User FirstName\", function () {",
+							"    var firstName = pm.response.json().title;",
+							"    pm.expect(firstName).to.eql(\"Book1User2\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "G-Token",
+						"type": "text",
+						"value": "ROM831ESV"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"Book1User2\",\n\t\"author\": \"Book1User2\",\n\t\"isbn\": \"15932810588102\"\n}"
+				},
+				"url": "{{host}}/books"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Book2 for User2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "74d5a845-6d9a-4e9f-9153-755616b08da1",
+						"exec": [
+							"pm.globals.set(\"user2Book2Id\", pm.response.json().id);",
+							"pm.globals.set(\"user2Book2Title\", pm.response.json().title);",
+							"",
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200,201,202]);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"title\");",
+							"});",
+							"",
+							"pm.test(\"Check User FirstName\", function () {",
+							"    var firstName = pm.response.json().title;",
+							"    pm.expect(firstName).to.eql(\"Book2User2\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "G-Token",
+						"type": "text",
+						"value": "ROM831ESV"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"Book2User2\",\n\t\"author\": \"Book2User2\",\n\t\"isbn\": \"15932810588102\"\n}"
+				},
+				"url": "{{host}}/books"
+			},
+			"response": []
+		},
+		{
+			"name": "Link Book1 to User2",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "G-Token",
+						"type": "text",
+						"value": "ROM831ESV"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{host}}/wishlists/{{user2HouseholdId}}/books/{{user2Book1Id}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Link Book2 to User2",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "G-Token",
+						"type": "text",
+						"value": "ROM831ESV"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{host}}/wishlists/{{user2HouseholdId}}/books/{{user2Book2Id}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Get User2 WishlistBooks",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "G-Token",
+						"type": "text",
+						"value": "ROM831ESV"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{host}}/wishlists/{{user2WishlistId}}/books/"
+			},
+			"response": []
+		},
+		{
+			"name": "Get books in Wishlist",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "66ad6747-8abf-4915-9029-a5b6ac4cc1f3",
+						"exec": [
+							"{\r",
+							"    \r",
+							"var book1 = pm.globals.get(\"user1Book1Title\");\r",
+							"\r",
+							"var book2 = pm.globals.get(\"user1Book2Title\");\r",
+							"\r",
+							"var book3 = pm.globals.get(\"user2Book1Title\");\r",
+							"\r",
+							"var book4 = pm.globals.get(\"user2Book2Title\");\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Verify if there are any duplicate books in the database\", function () {\r",
+							" pm.expect(book1).not.to.equal(book2).not.to.equal(book3).not.to.equal(book4);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "G-Token",
+						"type": "text",
+						"value": "ROM831ESV"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{host}}/wishlists/"
+			},
+			"response": []
+		},
+		{
+			"name": "Clear Global Variables",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "66ad6747-8abf-4915-9029-a5b6ac4cc1f3",
+						"exec": [
+							"pm.globals.clear();"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "G-Token",
+						"type": "text",
+						"value": "ROM831ESV"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{host}}/users/"
+			},
+			"response": []
+		}
+	]
+}
