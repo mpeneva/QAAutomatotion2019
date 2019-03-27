@@ -1,0 +1,17 @@
+{
+  "firstName": "TestFirstName",
+  "lastName": "TestLastName",
+  "password": "TestParola1234",
+  "mail": "test-mail@gmail.com",
+  "address": {
+    "firstName": "TestFirstName",
+    "lastName": "TestLastName",
+    "address1": "",
+    "city": "TestCity",
+    "state": "Florida",
+    "zipcode": "12345",
+    "country": "United States",
+    "mobilePhone": "123456789",
+    "alias": "TestAddressAlias"
+  }
+}
